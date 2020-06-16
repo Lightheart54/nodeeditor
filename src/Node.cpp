@@ -39,6 +39,12 @@ Node(std::unique_ptr<NodeDataModel> && dataModel)
 
   connect(_nodeDataModel.get(), &NodeDataModel::embeddedWidgetSizeUpdated,
           this, &Node::onNodeSizeUpdated );
+
+  connect(_nodeDataModel.get(), &NodeDataModel::portAdded,
+      this, &Node::onPortAdded);
+
+  connect(_nodeDataModel.get(), &NodeDataModel::portDeleted,
+      this, &Node::onPortRemoved);
 }
 
 
@@ -219,15 +225,21 @@ onNodeSizeUpdated()
         nodeDataModel()->embeddedWidget()->adjustSize();
     }
     nodeGeometry().recalculateSize();
-    for(PortType type: {PortType::In, PortType::Out})
-    {
-        for(auto& conn_set : nodeState().getEntries(type))
-        {
-            for(auto& pair: conn_set)
-            {
-                Connection* conn = pair.second;
-                conn->getConnectionGraphicsObject().move();
-            }
-        }
-    }
+    _nodeGraphicsObject->moveConnections();
+}
+
+void
+Node::
+onPortAdded(PortType portType, PortIndex index)
+{
+    nodeState().addPort(portType, index);
+    onNodeSizeUpdated();
+}
+
+void
+Node::
+onPortRemoved(PortType portType, PortIndex index)
+{
+    nodeState().removePort(portType, index);
+    onNodeSizeUpdated();
 }

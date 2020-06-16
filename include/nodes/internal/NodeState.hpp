@@ -58,6 +58,14 @@ public:
                   PortIndex portIndex,
                   QUuid id);
 
+  void
+  addPort(PortType portType,
+          PortIndex portIndex);
+
+  void
+  removePort(PortType portType,
+             PortIndex portIndex);
+
   ReactToConnectionState
   reaction() const;
 

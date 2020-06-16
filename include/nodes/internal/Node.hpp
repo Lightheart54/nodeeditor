@@ -101,6 +101,12 @@ public Q_SLOTS: // data propagation
   void
   onNodeSizeUpdated();
 
+  void
+  onPortAdded(PortType portType, PortIndex index);
+
+  void
+  onPortRemoved(PortType portType, PortIndex index);
+
 private:
 
   // addressing

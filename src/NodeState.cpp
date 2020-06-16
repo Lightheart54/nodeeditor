@@ -55,6 +55,53 @@ connections(PortType portType, PortIndex portIndex) const
 
 void
 NodeState::
+addPort(PortType portType,
+    PortIndex portIndex)
+{
+    if (portIndex < 0) return;
+
+    auto& connections = getEntries(portType);
+
+    if (portIndex > connections.size()) return;
+
+    NodeState::ConnectionPtrSet newSet;
+    if(portIndex < connections.size())
+    {
+        //we're inserting into the list
+        connections.insert(connections.begin() + portIndex, newSet);
+    }
+    else
+    {
+        //we're appending to the end of the list
+        connections.push_back(newSet);
+    }
+}
+
+void
+NodeState::
+removePort(PortType portType,
+    PortIndex portIndex)
+{
+    if (portIndex < 0) return;
+
+    auto& connections = getEntries(portType);
+
+    if (portIndex >= connections.size()) return;
+
+    if (portIndex < connections.size() - 1)
+    {
+        //we're removing a connection internal to the list
+        connections.erase(connections.begin() + portIndex);
+    }
+    else
+    {
+        //we're removing a connection at the end of the list
+        connections.pop_back();
+    }
+}
+
+void
+NodeState::
 setConnection(PortType portType,
               PortIndex portIndex,
               Connection& connection)

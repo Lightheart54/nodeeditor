@@ -18,6 +18,7 @@
 #include "DivisionModel.hpp"
 #include "ModuloModel.hpp"
 #include "Converters.hpp"
+#include "SumMultipleModel.hpp"
 
 
 using QtNodes::DataModelRegistry;
@@ -44,6 +45,8 @@ registerDataModels()
   ret->registerModel<DivisionModel>("Operators");
 
   ret->registerModel<ModuloModel>("Operators");
+
+  ret->registerModel<SumMultipleDataModel>("Operators");
 
   ret->registerTypeConverter(std::make_pair(DecimalData().type(),
                                             IntegerData().type()),

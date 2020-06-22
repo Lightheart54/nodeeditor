@@ -66,6 +66,9 @@ public:
   removePort(PortType portType,
              PortIndex portIndex);
 
+  void
+  swapPorts(PortType portType, PortIndex portIndex1, PortIndex portIndex2);
+
   ReactToConnectionState
   reaction() const;
 

@@ -102,6 +102,19 @@ removePort(PortType portType,
 
 void
 NodeState::
+swapPorts(PortType portType, PortIndex portIndex1, PortIndex portIndex2)
+{
+    if (portIndex1 < 0 || portIndex2 < 0) return;
+
+    auto& connections = getEntries(portType);
+
+    if (portIndex1 >= connections.size() || portIndex2 >= connections.size()) return;
+
+    std::swap(connections[portIndex1], connections[portIndex2]);
+}
+
+void
+NodeState::
 setConnection(PortType portType,
               PortIndex portIndex,
               Connection& connection)

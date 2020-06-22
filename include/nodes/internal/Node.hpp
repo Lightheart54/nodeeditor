@@ -107,6 +107,12 @@ public Q_SLOTS: // data propagation
   void
   onPortRemoved(PortType portType, PortIndex index);
 
+  void 
+  onPortPositionsSwapped(PortType portType, PortIndex portIndex1, PortIndex portIndex2);
+
+  void
+  onPortDataTypeChanged(PortType portType, PortIndex portIndex);
+
 private:
 
   // addressing

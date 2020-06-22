@@ -166,6 +166,10 @@ Q_SIGNALS:
 
   void portDeleted(PortType portType, PortIndex portIndex);
 
+  void portPositionsSwapped(PortType portType, PortIndex portIndex1, PortIndex portIndex2);
+
+  void portDataTypeChanged(PortType portType, PortIndex portIndex);
+
 private:
 
   NodeStyle _nodeStyle;

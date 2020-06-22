@@ -45,6 +45,12 @@ Node(std::unique_ptr<NodeDataModel> && dataModel)
 
   connect(_nodeDataModel.get(), &NodeDataModel::portDeleted,
       this, &Node::onPortRemoved);
+
+  connect(_nodeDataModel.get(), &NodeDataModel::portPositionsSwapped,
+      this, &Node::onPortPositionsSwapped);
+
+  connect(_nodeDataModel.get(), &NodeDataModel::portDataTypeChanged,
+      this, &Node::onPortDataTypeChanged);
 }
 
 
@@ -241,5 +247,23 @@ Node::
 onPortRemoved(PortType portType, PortIndex index)
 {
     nodeState().removePort(portType, index);
+    onNodeSizeUpdated();
+}
+
+void
+Node::
+onPortPositionsSwapped(PortType portType, PortIndex index1, PortIndex index2)
+{
+    nodeState().swapPorts(portType, index1, index2);
+    onNodeSizeUpdated();
+}
+
+void
+Node::
+onPortDataTypeChanged(PortType portType, PortIndex index)
+{
+    //simulate this by adding and removing the port
+    nodeState().removePort(portType, index);
+    nodeState().addPort(portType, index);
     onNodeSizeUpdated();
 }
